@@ -160,6 +160,7 @@ const Company = () => {
         <Grid item>
           <Button
             onClick={() => {
+              navigate("/addCompany")
             }}
             type="submit"
             color="secondary"

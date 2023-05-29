@@ -57,33 +57,38 @@ const navItems = [
     icon: <FoundationIcon />,
   },
   {
+    text: "Gestion d'Entrepot",
+    icon: <InventoryOutlinedIcon/>,
+  },
+  {
     text: "Gestion d'employees",
     icon: <Groups2Outlined />,
+  },
+  {
+    text: "Gestion de Clients",
+    icon: <GroupOutlinedIcon />,
   },
   {
     text: "Gestion de fournisseur",
     icon: <ReceiptLongOutlined />,
   },
   {
-    text: "Gestion de stock",
-    icon: <InventoryOutlinedIcon/>,
+    text: "Gestion de Materiels",
+    icon: <ConstructionIcon />,
   },
   {
     text: "Gestion de Commandes",
     icon: <PointOfSaleOutlined />,
   },
   {
-    text: "Gestion de Materiels",
-    icon: <ConstructionIcon />,
+    text: "Generateur de devis",
+    icon: <PointOfSaleOutlined />,
   },
   {
     text: "Gestion de payements",
     icon: <PaymentsIcon />,
   },
-  {
-    text: "Gestion de Clients",
-    icon: <GroupOutlinedIcon />,
-  },
+  
   {
     text: "Management",
     icon: null,
@@ -93,7 +98,7 @@ const navItems = [
     icon: <AdminPanelSettingsOutlined />,
   },
   {
-    text: "Performance",
+    text: "editCompany/1",
     icon: <TrendingUpOutlined />,
   },
 ];

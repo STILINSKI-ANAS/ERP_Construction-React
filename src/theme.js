@@ -183,6 +183,16 @@ export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 });
 
+const loadTheme = (themeName) => {
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href =
+    themeName === "dark"
+      ? "../src/dx.material.dark.css"
+      : "../src/dx.material.light.css";
+  document.head.appendChild(link);
+};
+
 // const handleThemeChange = () => {
 //   const isCurrentDark = theme === 'dark';
 //   setTheme(isCurrentDark ? 'light' : 'dark');
@@ -192,7 +202,12 @@ export const ColorModeContext = createContext({
 export const useMode = () => {
   const localStorageTheme = localStorage.getItem('theme');
   const [mode, setMode] = useState(localStorageTheme);
-  localStorage.setItem('theme', mode);
+  if(mode == 'null'){
+    localStorage.setItem('theme', 'dark');
+  }else{
+    localStorage.setItem('theme', mode);
+  }
+  loadTheme(localStorage.getItem('theme'));
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () =>

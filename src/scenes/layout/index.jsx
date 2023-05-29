@@ -14,7 +14,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const Layout = ({logout, user, login, isLoading}) => {
 
-  const isNonMobile = useMediaQuery("(min-width: 600px)");
+  // const isNonMobile = useMediaQuery("(min-width: 600px)");
+  const isNonMobile = true;
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   if(isLoading == true){
@@ -52,7 +53,7 @@ const Layout = ({logout, user, login, isLoading}) => {
         setIsSidebarOpen={setIsSidebarOpen}
       />
       <Box flexGrow={1}>
-      <Navbar
+        <Navbar
           user={user || {}}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}

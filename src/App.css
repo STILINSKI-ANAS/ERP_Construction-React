@@ -30,3 +30,40 @@ label {
     -webkit-border-radius: 50%;
     border-radius: 50%;
   }
+
+  .dx-icon-trash {
+    font-size: 24px !important; /* set the font size to adjust the icon size */
+  }
+  
+
+
+  .mui-data-grid .dx-gridbase-container{
+  font-size: 14px;
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 10px;
+}
+.dx-datagrid-header-panel{
+  border-radius: 10px 10px 0px 0px;
+}
+/*
+.dx-pager .dx-pages{
+  margin-right: 0.5em
+}
+
+
+.mui-data-grid .dx-data-row .dx-command-edit:before {
+  content: "";
+  display: inline-block;
+  height: 30px;
+}
+
+.dx-datagrid-header-panel .dx-toolbar{
+  padding: 10px;
+}
+
+.dx-toolbar-after{
+  right: 40px;
+}
+.dx-toolbar-item-content > .dx-texteditor{
+  width: 200px !important;
+} */
