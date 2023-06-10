@@ -1,28 +1,63 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import WarehouseIcon from '@mui/icons-material/Warehouse';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import FoundationIcon from '@mui/icons-material/Foundation';
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
-import GeographyChart from "../../components/GeographyChart";
-import BarChart from "../../components/BarChart";
+import BarChartPayement from "../../components/BarChartPayement";
+import BarChartCharge from "../../components/BarChartCharge";
 import StatBox from "../../components/StatBox";
-import ProgressCircle from "../../components/ProgressCircle";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useState } from "react";
+import Grid from "@mui/material/Unstable_Grid2";
 
 
-const Dashboard = ({user, isLoading}) => {
+const Dashboard = ({user, isLoading, statusLog}) => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [stat, setStat] = useState({});
+  const API_URL = "https://api.tourtit-travaux.com/api";
+
+  const [payement, setPayement] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        API_URL + "/charts/7"
+      );
+      const response2 = await axios.get(
+        API_URL + "/charts/8"
+      ); // Replace '/api/sum-by-day' with your Laravel endpoint URL
+      setStat(response.data);
+      // setStat(response2.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const getdata = async () =>{
+    const response = await fetch(API_URL + '/paiement',{
+      headers: {
+        "Content-Type": "application/json","Accept": "application/json",'X-Requested-With':'XMLHttpRequest'
+      },
+    credentials:'include',
+      },[])
+    const contenttemp = await response.json();
+    setPayement(contenttemp);
+    // setisLoading(false);
+    console.log(payement);
+  };
+
+  useEffect(() => {
+    fetchData();
+    getdata()
+
+    // console.log(payement);
+  }, []);
 
   if(isLoading == true){
     return (
@@ -30,7 +65,7 @@ const Dashboard = ({user, isLoading}) => {
         <CircularProgress color="success"/>
       </Box>
       )
-  }else if(user.message == "Unauthenticated."){
+  }else if(statusLog != 200){
     console.log('Unauthenticated')
     return (
     <Box sx={{ display: 'flex' }}>
@@ -42,10 +77,10 @@ const Dashboard = ({user, isLoading}) => {
       <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header title="TABLEAU DE BORD" subtitle="Voici Vos Statistiques" />
 
         <Box>
-          <Button
+          {/* <Button
             sx={{
               backgroundColor: colors.secondary[700],
               color: colors.grey[100],
@@ -56,21 +91,278 @@ const Dashboard = ({user, isLoading}) => {
           >
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
             Download Reports
-          </Button>
+          </Button> */}
         </Box>
       </Box>
-
+      <Grid container columnSpacing={3} rowSpacing={3}>
+          <Grid key={1} xs={12} sm={6} md={6} lg={3}>
+          <Box
+            p="15px"
+            backgroundColor={colors.primary[450]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{ boxShadow: 3 }}
+          >
+            <StatBox
+              title={stat.project_count + " Projets"}
+              subtitle="Nouveau projets"
+              progress="0.75"
+              increase="(30 Jour)"
+              icon={
+                <FoundationIcon
+                  sx={{ color: colors.primary[1000], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          </Grid>
+          <Grid key={2} xs={12} sm={6} md={6} lg={3}>
+          <Box
+            p="15px"
+            backgroundColor={colors.primary[450]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{ boxShadow: 3 }}
+          >
+            <StatBox
+              title={"MAD "+stat.chiffre}
+              subtitle="Chiffre d'affaire"
+              progress="0.75"
+              increase="(30 Jour)"
+              icon={
+                <AttachMoneyIcon
+                  sx={{ color: colors.primary[1000], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          </Grid>
+          <Grid key={3} xs={12} sm={6} md={6} lg={3}>
+          <Box
+            p="15px"
+            backgroundColor={colors.primary[450]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{ boxShadow: 3 }}
+            
+          >
+            <StatBox
+              title={"MAD "+stat.evalu_Entrepot}
+              subtitle="Valeur de L'entrepot"
+              progress="0.75"
+              increase=""
+              icon={
+                <WarehouseIcon
+                  sx={{ color: colors.primary[1000], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          </Grid>
+          <Grid key={4} xs={12} sm={6} md={6} lg={3}>
+          <Box
+            p="15px"
+            backgroundColor={colors.primary[450]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{ boxShadow: 3 }}
+          >
+            <StatBox
+              title={stat.client_count + " Clients"}
+              subtitle="Nouveau Client"
+              progress="0.75"
+              increase="(30 Jour)"
+              icon={
+                <GroupOutlinedIcon
+                  sx={{ color: colors.primary[1000], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          </Grid>
+          <Grid key={5} xs={12} sm={12} md={6} lg={6}>
+            <BarChartPayement isDashboard={true} />
+          </Grid>
+          <Grid key={6} xs={12} sm={12} md={6} lg={6}>
+            <BarChartCharge isDashboard={true} />
+          </Grid>
+          <Grid key={7} xs={12} sm={12} md={4} lg={4}>
+            <Box
+              backgroundColor={colors.primary[450]}
+              overflow="auto"
+              height="350px"
+              sx={{ boxShadow: 3 }}
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                borderBottom={`4px solid ${colors.primary[470]}`}
+                colors={colors.grey[100]}
+                p="15px"
+              >
+                <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
+                  Derniers Paiements
+                </Typography>
+              </Box>
+              {payement.map((transaction, i) => (
+                <Box
+                  key={`${transaction.id}-${i}`}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  borderBottom={`4px solid ${colors.primary[470]}`}
+                  p="15px"
+                >
+                  <Box>
+                    <Typography
+                      color={colors.secondary[500]}
+                      variant="h5"
+                      fontWeight="600"
+                    >
+                      {new Date(transaction.created_at).toLocaleString('fr-FR', {year: 'numeric',month: 'long',day: 'numeric',})}
+                      
+                    </Typography>
+                    <Typography color={colors.grey[100]}>
+                      {transaction.client.name}
+                    </Typography>
+                  </Box>
+                  <Box color={colors.grey[100]}>{transaction.date}</Box>
+                  <Box
+                    backgroundColor={colors.secondary[600]}
+                    p="5px 10px"
+                    borderRadius="4px"
+                  >
+                    MAD {transaction.somme}
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Grid>
+          {/* <Grid key={8} xs={12} sm={12} md={4} lg={4}>
+            <Box
+              backgroundColor={colors.primary[450]}
+              overflow="auto"
+              height="350px"
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                borderBottom={`4px solid ${colors.primary[500]}`}
+                colors={colors.grey[100]}
+                p="15px"
+              >
+                <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
+                  Derniers Paiements
+                </Typography>
+              </Box>
+              {mockTransactions.map((transaction, i) => (
+                <Box
+                  key={`${transaction.txId}-${i}`}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  borderBottom={`4px solid ${colors.primary[500]}`}
+                  p="15px"
+                >
+                  <Box>
+                    <Typography
+                      color={colors.secondary[500]}
+                      variant="h5"
+                      fontWeight="600"
+                    >
+                      {transaction.txId}
+                    </Typography>
+                    <Typography color={colors.grey[100]}>
+                      {transaction.user}
+                    </Typography>
+                  </Box>
+                  <Box color={colors.grey[100]}>{transaction.date}</Box>
+                  <Box
+                    backgroundColor={colors.secondary[500]}
+                    p="5px 10px"
+                    borderRadius="4px"
+                  >
+                    ${transaction.cost}
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Grid>
+          <Grid key={9} xs={12} sm={12} md={4} lg={4}>
+            <Box
+              backgroundColor={colors.primary[450]}
+              overflow="auto"
+              height="350px"
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                borderBottom={`4px solid ${colors.primary[500]}`}
+                colors={colors.grey[100]}
+                p="15px"
+              >
+                <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
+                  Derniers Paiements
+                </Typography>
+              </Box>
+              {mockTransactions.map((transaction, i) => (
+                <Box
+                  key={`${transaction.txId}-${i}`}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  borderBottom={`4px solid ${colors.primary[500]}`}
+                  p="15px"
+                >
+                  <Box>
+                    <Typography
+                      color={colors.secondary[500]}
+                      variant="h5"
+                      fontWeight="600"
+                    >
+                      {transaction.txId}
+                    </Typography>
+                    <Typography color={colors.grey[100]}>
+                      {transaction.user}
+                    </Typography>
+                  </Box>
+                  <Box color={colors.grey[100]}>{transaction.date}</Box>
+                  <Box
+                    backgroundColor={colors.secondary[500]}
+                    p="5px 10px"
+                    borderRadius="4px"
+                  >
+                    ${transaction.cost}
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Grid> */}
+          <Grid key={9} xs={12} sm={12} md={8} lg={8}>
+            <LineChart isDashboard={true} />
+          </Grid>
+          
+        </Grid>
       {/* GRID & CHARTS */}
       <Box
+      mt={5}
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
         gridAutoRows="140px"
         gap="20px"
       >
+        
         {/* ROW 1 */}
-        <Box
+        {/* <Box
           gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -89,7 +381,7 @@ const Dashboard = ({user, isLoading}) => {
         </Box>
         <Box
           gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -108,7 +400,7 @@ const Dashboard = ({user, isLoading}) => {
         </Box>
         <Box
           gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -127,7 +419,7 @@ const Dashboard = ({user, isLoading}) => {
         </Box>
         <Box
           gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -143,13 +435,13 @@ const Dashboard = ({user, isLoading}) => {
               />
             }
           />
-        </Box>
+        </Box> */}
 
         {/* ROW 2 */}
         {/* <Box
           gridColumn="span 8"
           gridRow="span 2"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
         >
           <Box
             mt="25px"
@@ -183,13 +475,14 @@ const Dashboard = ({user, isLoading}) => {
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+            <BarChartPayement isDashboard={true} />
+
           </Box>
-        </Box>
-        <Box
+        </Box> */}
+        {/* <Box
           gridColumn="span 4"
           gridRow="span 2"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
           overflow="auto"
         >
           <Box
@@ -241,7 +534,7 @@ const Dashboard = ({user, isLoading}) => {
         {/* <Box
           gridColumn="span 4"
           gridRow="span 2"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
           p="30px"
         >
           <Typography variant="h5" fontWeight="600">
@@ -267,7 +560,7 @@ const Dashboard = ({user, isLoading}) => {
         <Box
           gridColumn="span 4"
           gridRow="span 2"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
         >
           <Typography
             variant="h5"
@@ -283,7 +576,7 @@ const Dashboard = ({user, isLoading}) => {
         <Box
           gridColumn="span 4"
           gridRow="span 2"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.primary[450]}
           padding="30px"
         >
           <Typography

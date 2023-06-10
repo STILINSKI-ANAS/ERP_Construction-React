@@ -9,9 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { CenterFocusStrong } from "@mui/icons-material";
 import { Navigate } from "react-router-dom";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 
-const SignUp = ({SignUp, user}) => {
+
+const SignUp = ({SignUp, user, statusLog}) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
   
@@ -31,7 +33,7 @@ const SignUp = ({SignUp, user}) => {
     }
   };
 
-  if(user.message != "Unauthenticated."){
+  if(statusLog == 200){
     console.log('INN...')
     return <Navigate to="/dashboard" />
   }else{
@@ -53,19 +55,14 @@ const SignUp = ({SignUp, user}) => {
           handleSubmit,
         }) => (
           <form onSubmit={handleSubmit}>
-
             <Box
-              sx={{
-                marginTop: 8,
-                paddingRight:10,
-                paddingLeft:10,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 2
-              }}
-            >
-              <TextField
+                  p="15px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{ boxShadow: 1 }}
+                >
+                <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -78,7 +75,15 @@ const SignUp = ({SignUp, user}) => {
                 helperText={touched.name && errors.name}
                 // sx={{ gridColumn: "span 12" }}
               />
-              <TextField
+            </Box>
+            <Box
+                  p="15px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{ boxShadow: 1 }}
+                >
+                <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -91,7 +96,15 @@ const SignUp = ({SignUp, user}) => {
                 helperText={touched.email && errors.email}
                 // sx={{ gridColumn: "span 3" }}
               />
-              <TextField
+            </Box>
+            <Box
+                  p="15px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{ boxShadow: 1 }}
+                >
+                <TextField
                 fullWidth
                 variant="filled"
                 type="password"
@@ -106,8 +119,16 @@ const SignUp = ({SignUp, user}) => {
               />
             </Box>
             <Box display="flex" justifyContent="center" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-              SignUp
+              <Button
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  padding: "10px 20px",
+                }}
+                type="submit" color="secondary" variant="contained"
+              >
+                <CheckCircleOutlineIcon sx={{ mr: "10px" }} />
+                SignUp
               </Button>
               <ToastContainer />
             </Box>

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Box } from "@mui/material";
 import Header from "../../components/Header";
-import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import DataSource from 'devextreme/data/data_source';
 import CustomStore from 'devextreme/data/custom_store';
 import {
@@ -18,7 +14,7 @@ import {
   Pager,
 } from "devextreme-react/data-grid";
 import '../../App.css';
-const Employees = () =>{
+const Ouvriers = () =>{
 
   const API_URL = "https://api.tourtit-travaux.com/api";
 
@@ -124,8 +120,8 @@ const Employees = () =>{
 return (
   <Box m="20px">
     <Header
-      title="Employees"
-      subtitle="Gestion de vous employées"
+      title="Ouvriers"
+      subtitle="Gestion de vous ouvriers"
       sx={{ gridColumn: "span 2" }}
     />
     <Box height="75vh" p={1}>
@@ -173,4 +169,4 @@ return (
   </Box>
 );
 };
-export default Employees;
+export default Ouvriers;

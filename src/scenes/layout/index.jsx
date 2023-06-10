@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { Box, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
-// import { useSelector } from "react-redux";
 import Navbar from "../global/Navbar";
 import Sidebar from "../global/Sidebar";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import SignIn from "../../pages/SignIn";
-// import { useGetUserQuery } from "state/api"
-
-import { Navigate } from "react-router-dom";
+import { useRef } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 
-const Layout = ({logout, user, login, isLoading}) => {
+
+const Layout = ({logout, user, login, isLoading, statusLog}) => {
 
   // const isNonMobile = useMediaQuery("(min-width: 600px)");
-  const isNonMobile = true;
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
+  const isNonMobile = false;
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const btnRef = useRef({});
   if(isLoading == true){
     return (
       <Box 
@@ -29,7 +24,7 @@ const Layout = ({logout, user, login, isLoading}) => {
         <CircularProgress color="success"/>
       </Box>
       )
-  }else if(user.message == "Unauthenticated."){
+  }else if(statusLog != 200){
     return (
     <Box display={isNonMobile ? "flex" : "block"} width="100%" height="100%">
       <Box flexGrow={1}>
@@ -51,6 +46,8 @@ const Layout = ({logout, user, login, isLoading}) => {
         drawerWidth="250px"
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
+        btnRef={btnRef}
+        statusLog={statusLog}
       />
       <Box flexGrow={1}>
         <Navbar
@@ -58,6 +55,8 @@ const Layout = ({logout, user, login, isLoading}) => {
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
           logout={logout}
+          btnRef={btnRef}
+          statusLog={statusLog}
         />
        <Outlet />
       </Box>

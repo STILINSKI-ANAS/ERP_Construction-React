@@ -3,18 +3,17 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../components/Header";
-import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import { setAuthToken } from "../setAuthToken";
-import AuthService from "../services/auth.service";
 import { Navigate } from "react-router-dom";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 
-const SignIn = ({login, user}) => {
+const SignIn = ({login, user, statusLog}) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
+
 
   const handleFormSubmit = async ( values) => {
     try {
@@ -31,7 +30,7 @@ const SignIn = ({login, user}) => {
       console.log(err);
     }
   };
-if(user.message != "Unauthenticated."){
+if(statusLog == 200){
   console.log('INN...')
   return <Navigate to="/dashboard" />
 }else{
@@ -53,54 +52,66 @@ if(user.message != "Unauthenticated."){
           handleSubmit,
         }) => (
           <form onSubmit={handleSubmit}>
-
             <Box
-              sx={{
-                marginTop: 8,
-                paddingRight:10,
-                paddingLeft:10,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 2
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                // sx={{ gridColumn: "span 3" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="password"
-                label="Password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.password}
-                name="password"
-                error={!!touched.password && !!errors.password}
-                helperText={touched.password && errors.password}
-                // sx={{ gridColumn: "span 3" }}
-              />
+                  p="15px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{ boxShadow: 3 }}
+                >
+                  <TextField
+      
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.email}
+                  name="email"
+                  error={!!touched.email && !!errors.email}
+                  helperText={touched.email && errors.email}
+                />
+            </Box>
+            <Box
+                  p="15px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{ boxShadow: 3 }}
+                >
+                  <TextField
+                  fullWidth
+                  variant="filled"
+                  type="password"
+                  label="Password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.password}
+                  name="password"
+                  error={!!touched.password && !!errors.password}
+                  helperText={touched.password && errors.password}
+                  // sx={{ gridColumn: "span 3" }}
+                />
             </Box>
             <Box display="flex" justifyContent="center" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-              SignIn
+              <Button
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  padding: "10px 20px",
+                }}
+                type="submit" color="secondary" variant="contained"
+              >
+                <CheckCircleOutlineIcon sx={{ mr: "10px" }} />
+                SignIn
               </Button>
-              <ToastContainer />
             </Box>
           </form>
         )}
       </Formik>
+      <ToastContainer 
+        theme="colored"/>
     </Box>
   );
 }

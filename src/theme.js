@@ -10,6 +10,7 @@ export const tokens = (mode) => ({
         10: "#f6f6f6", // manually adjusted
         50: "#f0f0f0", // manually adjusted
         100: "#e0e0e0",
+        150: "#1E1E1E",
         200: "#c2c2c2",
         300: "#a3a3a3",
         400: "#858585",
@@ -18,6 +19,7 @@ export const tokens = (mode) => ({
         700: "#3d3d3d",
         800: "#292929",
         900: "#141414",
+        950: "#242424",
         1000: "#000000", // manually adjusted
       },
       primary: {
@@ -26,29 +28,38 @@ export const tokens = (mode) => ({
         200: "#a6a9be",
         300: "#7a7f9d",
         400: "#4d547d",
-        500: "#21295c",
+        470: "#4d4d4d",
+        450: "#383838",
+        500: "#F9A12D",
         600: "#191F45", // manually adjusted
         700: "#141937",
         800: "#0d1025",
         900: "#070812",
+        1000: "#F9A12D",
       },
       secondary: {
         // yellow
         50: "#f0f0f0", // manually adjusted
         100: "#fff6e0",
         200: "#ffedc2",
+        250: "#fff6e0",
         300: "#ffe3a3",
         400: "#ffda85",
-        500: "#ffd166",
+        500: "#CCA752",
+        550: "#4cceac",
         600: "#cca752",
         700: "#997d3d",
         800: "#665429",
         900: "#332a14",
+        1000: "#00e96d",
+        1100: "#ff5959",
+
       },
       }
     : {
         grey: {
           100: "#141414",
+          150: "#F2F0F0",
           200: "#292929",
           300: "#3d3d3d",
           400: "#525252",
@@ -57,28 +68,36 @@ export const tokens = (mode) => ({
           700: "#a3a3a3",
           800: "#c2c2c2",
           900: "#e0e0e0",
+          950: "#424242",
         },
         primary: {
           100: "#040509",
           200: "#080b12",
           300: "#0c101b",
           400: "#f2f0f0", // manually changed
+          450: "#f2f0f0",
+          470: "#9e9e9e",
           500: "#182334",
           600: "#1F2A40",
           700: "#727681",
           800: "#a1a4ab",
           900: "#d0d1d5",
+          1000: "#F9A12D",
         },
         secondary: {
           100: "#0f2922",
           200: "#1e5245",
+          250: "#ffffff",
           300: "#2e7c67",
           400: "#fedeb3",
-          500: "#4cceac",
+          500: "#CCA752",
+          550: "#4cceac",
           600: "#ffffff",
           700: "#fdb14e",
           800: "#b7ebde",
           900: "#dbf5ee",
+          1000: "#00e96d", //4cceac
+          1100: "#ff5959",
         },
         redAccent: {
           100: "#2c100f",
@@ -126,7 +145,7 @@ export const themeSettings = (mode) => {
               light: colors.grey[100],
             },
             background: {
-              default: colors.primary[500],
+              default: colors.grey[950],
             },
           }
         : {
@@ -143,7 +162,7 @@ export const themeSettings = (mode) => {
               light: colors.grey[100],
             },
             background: {
-              default: "#fcfcfc",
+              default: colors.primary[950],
             },
           }),
     },

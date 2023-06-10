@@ -28,29 +28,21 @@ import {
   TrendingUpOutlined,
   PieChartOutlined,
 } from "@mui/icons-material";
+import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
-import profileImage from "../../assets/user.png";
-import BusinessIcon from '@mui/icons-material/Business';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import FoundationIcon from '@mui/icons-material/Foundation';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import { useRef } from "react";
 
 const navItems = [
   {
     text: "Dashboard",
     icon: <HomeOutlined />,
-  },
-  {
-    text: "Client Facing",
-    icon: null,
-  },
-  {
-    text: "Gestion de societe",
-    icon: <BusinessIcon />,
   },
   {
     text: "Gestion de Projets",
@@ -61,7 +53,7 @@ const navItems = [
     icon: <InventoryOutlinedIcon/>,
   },
   {
-    text: "Gestion d'employees",
+    text: "Gestion d'Ouvriers",
     icon: <Groups2Outlined />,
   },
   {
@@ -73,12 +65,8 @@ const navItems = [
     icon: <ReceiptLongOutlined />,
   },
   {
-    text: "Gestion de Materiels",
+    text: "Gestion de Matériel de Location",
     icon: <ConstructionIcon />,
-  },
-  {
-    text: "Gestion de Commandes",
-    icon: <PointOfSaleOutlined />,
   },
   {
     text: "Generateur de devis",
@@ -88,7 +76,10 @@ const navItems = [
     text: "Gestion de payements",
     icon: <PaymentsIcon />,
   },
-  
+  {
+    text: "Gestion de Commandes",
+    icon: <PointOfSaleOutlined />,
+  },
   {
     text: "Management",
     icon: null,
@@ -96,10 +87,6 @@ const navItems = [
   {
     text: "Admin",
     icon: <AdminPanelSettingsOutlined />,
-  },
-  {
-    text: "editCompany/1",
-    icon: <TrendingUpOutlined />,
   },
 ];
 
@@ -109,18 +96,27 @@ const Sidebar = ({
   isSidebarOpen,
   setIsSidebarOpen,
   isNonMobile,
+  btnRef
 }) => {
   const { pathname } = useLocation();
   const [active, setActive] = useState("");
   const navigate = useNavigate();
   const theme = useTheme();
-  // isSidebarOpen = true
+  const colors = tokens(theme.palette.mode);
+  const cusref = useRef();
+  const closeSide = e =>{
+    if((e.srcElement !== btnRef.current.element2) && (e.srcElement !== btnRef.current.element1)){
+      setIsSidebarOpen(false);
+    }
+  }
   useEffect(() => {
     setActive(pathname.substring(1));
+    document.body.addEventListener('click',closeSide);
+    return() => document.body.removeEventListener('click', closeSide);
   }, [pathname]);
 
   return (
-    <Box component="nav" width={250}>
+    <Box component="nav" width={250} >
       {isSidebarOpen && (
         <Drawer
           open={isSidebarOpen}
@@ -142,7 +138,7 @@ const Sidebar = ({
             <Box m="1.5rem 2rem 2rem 3rem">
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
-                  <Typography variant="h4" fontWeight="bold">
+                  <Typography variant="h4" fontWeight="bold" color={colors.secondary[100]}>
                     JARD TOURTIT
                   </Typography>
                 </Box>
@@ -171,9 +167,10 @@ const Sidebar = ({
                         setActive(lcText);
                       }}
                       sx={{
+                        boxShadow: 3,
                         backgroundColor:
                           active === lcText
-                            ? theme.palette.secondary[300]
+                            ? theme.palette.secondary[100]
                             : "transparent",
                         color:
                           active === lcText
@@ -203,7 +200,7 @@ const Sidebar = ({
             </List>
           </Box>
 
-          <Box position="absolute" bottom="1rem">
+          {/* <Box position="absolute" bottom="1rem">
             <Divider />
             <FlexBetween textTransform="none" gap="1.5rem" m="1rem 1rem 0rem 3rem">
               <Box
@@ -237,7 +234,7 @@ const Sidebar = ({
                 }}
               />
             </FlexBetween>
-          </Box>
+          </Box> */}
         </Drawer>
       )}
     </Box>

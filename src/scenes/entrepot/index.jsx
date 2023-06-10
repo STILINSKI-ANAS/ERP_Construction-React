@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Box } from "@mui/material";
 import Header from "../../components/Header";
 import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import DataSource from 'devextreme/data/data_source';
 import CustomStore from 'devextreme/data/custom_store';
 import {
@@ -132,7 +129,7 @@ return (
       alignItems="flex-end"
     >
       <Grid item>
-        <Button
+        {/* <Button
           onClick={() => {}}
           type="submit"
           color="secondary"
@@ -140,11 +137,12 @@ return (
           endIcon={<AddIcon />}
         >
           Add
-        </Button>
+        </Button> */}
       </Grid>
     </Grid>
     <Box height="75vh" p={1}>
       <DataGrid
+        sx={{ boxShadow: 1 }}
         dataSource={dataSource}
         allowColumnResizing={true}
         allowColumnReordering={true}

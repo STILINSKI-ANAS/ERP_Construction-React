@@ -8,8 +8,6 @@ import {
   SettingsOutlined,
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
-// import { useDispatch } from "react-redux";
-// import { setMode } from "state";
 import profileImage from "../../assets/user.png";
 import {
   AppBar,
@@ -29,7 +27,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useNavigate } from "react-router-dom";
 
-const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen, logout }) => {
+const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen, logout, btnRef, statusLog }) => {
   // const dispatch = useDispatch();
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
@@ -57,19 +55,19 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen, logout }) => {
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
-        {user.message == "Unauthenticated." ?
+        {statusLog != 200 ?
         <></>
         :
         <FlexBetween>
-          <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            <MenuIcon />
+          <IconButton ref={el => btnRef.current.element1 = el} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+            <MenuIcon ref={el => btnRef.current.element2 = el}/>
           </IconButton>
         </FlexBetween>
         }
         
 
         {/* RIGHT SIDE */}
-        {user.message == "Unauthenticated." ?
+        {statusLog != 200 ?
         <FlexBetween gap="1.5rem">
         
         <IconButton onClick={Tosignin}>

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Box } from "@mui/material";
 import Header from "../../components/Header";
-import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import DataSource from 'devextreme/data/data_source';
 import CustomStore from 'devextreme/data/custom_store';
 import {
@@ -124,8 +120,8 @@ const Materiel = () =>{
 return (
   <Box m="20px">
     <Header
-      title="Materiels"
-      subtitle="Gestion de vous employées"
+      title="Matériel de Location"
+      subtitle="Gestion de Matériel à louer"
       sx={{ gridColumn: "span 2" }}
     />
     <Box height="75vh" p={1}>

@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -52,6 +51,8 @@ const EditProjet = () => {
   const { id } = useParams();
 
   const API_URL = "https://api.tourtit-travaux.com/api";
+  // const API_URL = "http://localhost/ERP_Construction_Api/public/api";
+
   const reqHeaders = {
     headers: {
       "Content-Type": "application/json",
@@ -555,7 +556,10 @@ const EditProjet = () => {
   const handleFormSubmit = async (values) => {
     await fetch(API_URL + "/projet/" + id, {
       method: "PUT",
-      reqHeaders,
+      headers: {
+        "Content-Type": "application/json",
+        // "Accept": "application/json",
+      },
       credentials:'include',
       body: JSON.stringify(values),
     })
@@ -590,7 +594,7 @@ const EditProjet = () => {
 
   return (
     <Box m="20px">
-      <Header title="GESTION D'UN PROJET" subtitle="Projet ahmed sultan" />
+      <Header title="GESTION D'UN PROJET" subtitle="" />
 
       <Grid container spacing={2}>
         <Grid key="0" xs={12} sm={12} md={12} lg={12}>
@@ -621,6 +625,7 @@ const EditProjet = () => {
             className="mui-data-grid"
             showBorders={false}
             rowAlternationEnabled={true}
+            columnHidingEnabled={true}
           >
             <Editing
               mode="batch"
@@ -630,14 +635,12 @@ const EditProjet = () => {
               useIcons={true}
             />
             <HeaderFilter visible={true} />
-            <GroupPanel visible={true} />
-            <Grouping autoExpandAll={false} />
             <Scrolling mode="infinit" />
             <Column
               maxWidth={100}
               dataField="invoice_num"
               caption="N°"
-              groupIndex={0}
+              // groupIndex={0}
             />
             <Column dataField="entrepot_id" caption="L'article" width={125}>
               <Lookup dataSource={articles} valueExpr="id" displayExpr="name" />
@@ -687,6 +690,7 @@ const EditProjet = () => {
             className="mui-data-grid"
             showBorders={false}
             rowAlternationEnabled={true}
+            columnHidingEnabled={true}
           >
             <Editing
               mode="batch"
@@ -745,6 +749,7 @@ const EditProjet = () => {
             className="mui-data-grid"
             showBorders={false}
             rowAlternationEnabled={true}
+            columnHidingEnabled={true}
           >
             <Editing
               mode="batch"
@@ -803,6 +808,7 @@ const EditProjet = () => {
             className="mui-data-grid"
             showBorders={false}
             rowAlternationEnabled={true}
+            columnHidingEnabled={true}
           >
             <Editing
               mode="batch"

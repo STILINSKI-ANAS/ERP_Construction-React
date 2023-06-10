@@ -15,21 +15,24 @@ body,
   position: relative;
 }
 
+/* Scrollbar modification */
+
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 6px;
+    height: 6px; 
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #e0e0e0;
+    background-color: white;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+    background-color: rgba(249, 161, 45, 0.8);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background-color: rgba(56,56,56,0.6);
 }
